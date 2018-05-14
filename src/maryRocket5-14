@@ -19,6 +19,7 @@ public class Rocket {
 	private int speed;
 	private int direction;
 	private int lives;
+	private int maxSpeed;
 	private Image pic;
 	private static int width = 80;
 	private static int height = 90;
@@ -32,6 +33,7 @@ public class Rocket {
 		lives = 3;
 		speed=0;
 		score = 0;
+		maxSpeed  = 50;
 		
 		try {
             pic = ImageIO.read(this.getClass().getResourceAsStream("rocket final.png"));
@@ -106,13 +108,27 @@ public class Rocket {
 
 
 	public void move(int time) {
-		
+		//time is determined by a timer in the up button method
+		//turns off after up button is released
+		if(speed < maxSpeed){
+			int changeY = (int) ((speed+(acceleration*time))*(Math.sin(Math.toRadians(direction))));
+			int changeX = (int) ((speed+(acceleration*time))*(Math.cos(Math.toRadians(direction))));
+			x = x+changeX;
+			y = y+changeY;
+			speed = speed+(acceleration*time);
+		}
+			else{
+				int changeY = (int) (maxSpeed*(Math.sin(Math.toRadians(direction))));
+				int changeX = (int) (maxSpeed*(Math.cos(Math.toRadians(direction))));
+				x = x+changeX;
+				y = y+changeY;
+		}
 		
 	}
 
 
 	public void slowDown() {
-		speed--;
+		speed = speed - 4;
 		
 	}
 
